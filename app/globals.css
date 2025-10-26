@@ -1,0 +1,172 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .neon-button {
+    @apply relative px-4 py-2 md:px-6 md:py-2 text-white text-sm md:text-base font-medium rounded-full;
+    background: linear-gradient(90deg, #ff0080 0%, #7928ca 100%);
+    box-shadow: 0 0 10px rgba(255, 0, 128, 0.5);
+    transition: all 0.3s ease;
+  }
+
+  .neon-button:hover {
+    box-shadow: 0 0 20px rgba(255, 0, 128, 0.8);
+    transform: translateY(-1px);
+  }
+
+  .neon-button::before {
+    content: "";
+    position: absolute;
+    inset: -2px;
+    background: linear-gradient(90deg, #ff0080 0%, #7928ca 100%);
+    border-radius: inherit;
+    z-index: -1;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .neon-button:hover::before {
+    opacity: 0.5;
+  }
+
+  .neon-button-primary {
+    @apply relative px-4 py-2 md:px-8 md:py-3 text-white text-sm md:text-base font-medium rounded-full;
+    background: linear-gradient(90deg, #8000ff 0%, #9933ff 100%);
+    box-shadow: 0 0 15px rgba(128, 0, 255, 0.5);
+    transition: all 0.3s ease;
+  }
+
+  .neon-button-primary:hover {
+    box-shadow: 0 0 25px rgba(128, 0, 255, 0.8);
+    transform: translateY(-1px);
+  }
+
+  .neon-button-secondary {
+    @apply relative px-4 py-2 md:px-8 md:py-3 text-white text-sm md:text-base font-medium rounded-full;
+    background: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+    transition: all 0.3s ease;
+  }
+
+  .neon-button-secondary:hover {
+    background: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+    transform: translateY(-1px);
+  }
+
+  .nav-menu-item {
+    @apply relative overflow-hidden rounded-lg transition-all duration-300;
+  }
+
+  .nav-menu-item::before {
+    content: "";
+    @apply absolute inset-0 bg-gradient-to-r from-pink-500 to-purple-500 opacity-0 transition-opacity duration-300;
+  }
+
+  .nav-menu-item:hover::before {
+    @apply opacity-10;
+  }
+
+  /* Button hover effects */
+  .nav-menu-trigger {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .nav-menu-trigger::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: var(--primary);
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.3s ease;
+  }
+
+  .nav-menu-trigger:hover::after {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+}
+
+:root {
+  --background: 222 71% 4%;
+  --foreground: 213 31% 91%;
+  --primary: 270 100% 50%;
+  --primary-foreground: 0 0% 100%;
+  --secondary: 165 100% 36%;
+  --secondary-foreground: 0 0% 100%;
+  --accent: 270 100% 50%;
+  --accent-foreground: 210 40% 98%;
+  --card: 222 47% 11%;
+  --card-foreground: 213 31% 91%;
+  --popover: 222 47% 11%;
+  --popover-foreground: 213 31% 91%;
+  --muted: 223 47% 11%;
+  --muted-foreground: 215.4 16.3% 56.9%;
+  --destructive: 0 63% 31%;
+  --destructive-foreground: 210 40% 98%;
+  --border: 216 34% 17%;
+  --input: 216 34% 17%;
+  --ring: 216 34% 17%;
+  --radius: 1rem;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply text-foreground bg-[#0E1C3D];
+}
+
+/* Navigation menu animations */
+@keyframes menuEnter {
+  from {
+    opacity: 0;
+    transform: translateY(-4px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.nav-menu-content {
+  animation: menuEnter 0.2s ease-out;
+  transform-origin: top;
+}
+
+.nav-menu-item {
+  opacity: 0;
+  transform: translateY(-8px);
+  animation: menuItemSlide 0.3s ease forwards;
+}
+
+@keyframes menuItemSlide {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Glassmorphism effect */
+.nav-menu-backdrop {
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.nav-menu-item {
+  @apply relative overflow-hidden rounded-lg transition-all duration-300;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.nav-menu-item:hover {
+  background: rgba(255, 255, 255, 0.06);
+}
