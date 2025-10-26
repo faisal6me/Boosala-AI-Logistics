@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { DashboardLayout } from "@/components/dashboard-layout"
+import { DashboardLayoutWithSidebar } from "@/components/dashboard-layout-with-sidebar"
 import { useLanguage } from "@/hooks/use-language"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
@@ -394,16 +394,16 @@ export default function ZonesPage() {
 
   if (loading) {
     return (
-      <DashboardLayout title={isRTL ? "المناطق" : "Zones"}>
+      <DashboardLayoutWithSidebar>
         <div className="flex items-center justify-center h-96">
           <Loader2 className="w-8 h-8 animate-spin text-primary" />
         </div>
-      </DashboardLayout>
+      </DashboardLayoutWithSidebar>
     )
   }
 
   return (
-    <DashboardLayout title={isRTL ? "إدارة المناطق" : "Zone Management"}>
+    <DashboardLayoutWithSidebar>
       <div className="space-y-6" dir={isRTL ? "rtl" : "ltr"}>
         <div className="flex items-center justify-between">
           <div>
@@ -720,6 +720,6 @@ export default function ZonesPage() {
           </DialogFooter>
         </DialogContent>
       </Dialog>
-    </DashboardLayout>
+    </DashboardLayoutWithSidebar>
   )
 }

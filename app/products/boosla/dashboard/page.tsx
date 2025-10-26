@@ -20,7 +20,7 @@ import {
   Truck,
   Settings,
 } from "lucide-react"
-import { DashboardLayout } from "@/components/dashboard-layout"
+import { DashboardLayoutWithSidebar } from "@/components/dashboard-layout-with-sidebar"
 import { motion, AnimatePresence } from "framer-motion"
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar, PieChart, Pie, Cell } from "recharts"
 
@@ -409,7 +409,7 @@ export default function DashboardPage() {
   }
 
   return (
-    <DashboardLayout>
+    <DashboardLayoutWithSidebar>
       <div className="space-y-8">
         {/* Welcome Section */}
         <div>
@@ -867,6 +867,6 @@ export default function DashboardPage() {
           </div>
         </div>
       </div>
-    </DashboardLayout>
+    </DashboardLayoutWithSidebar>
   )
 }
