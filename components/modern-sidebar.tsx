@@ -16,6 +16,7 @@ import {
   X,
   PanelRightClose,
   PanelRightOpen,
+  LogOut,
 } from "lucide-react"
 import { usePathname, useRouter } from "next/navigation"
 import { cn } from "@/lib/utils"
@@ -109,6 +110,37 @@ export function ModernSidebar({ className }: ModernSidebarProps) {
     router.push(href)
     if (isMobileOpen) {
       setIsMobileOpen(false)
+    }
+  }
+
+  const handleLogout = async () => {
+    try {
+      console.log("[v0] Logging out...")
+      
+      // Call logout API
+      const response = await fetch("/api/auth/logout", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+
+      if (response.ok) {
+        // Clear localStorage
+        localStorage.removeItem("auth-token")
+        
+        // Redirect to login page
+        router.push("/products/boosla/login")
+        
+        console.log("[v0] Logout successful")
+      } else {
+        console.error("[v0] Logout failed")
+      }
+    } catch (error) {
+      console.error("[v0] Logout error:", error)
+      // Still redirect to login page even if API call fails
+      localStorage.removeItem("auth-token")
+      router.push("/products/boosla/login")
     }
   }
 
@@ -308,8 +340,51 @@ export function ModernSidebar({ className }: ModernSidebarProps) {
         })}
       </nav>
 
-      {/* Footer - Collapse toggle */}
-      <div className="p-4 border-t border-slate-800/50">
+      {/* Footer - Logout and Collapse toggle */}
+      <div className="p-4 border-t border-slate-800/50 space-y-2">
+        {/* Logout Button */}
+        <motion.button
+          onClick={handleLogout}
+          className={cn(
+            "w-full relative group",
+            "transition-all duration-300"
+          )}
+          whileHover={{ scale: 1.02 }}
+          whileTap={{ scale: 0.98 }}
+        >
+          <div
+            className={cn(
+              "flex items-center gap-3 px-4 py-3 rounded-xl",
+              "bg-red-500/10 hover:bg-red-500/20 border border-red-500/30",
+              "transition-all duration-300 group",
+              isCollapsed && "justify-center px-0"
+            )}
+          >
+            <LogOut className="w-5 h-5 text-red-400 group-hover:text-red-300 transition-colors" />
+            <AnimatePresence mode="wait">
+              {!isCollapsed && (
+                <motion.span
+                  initial={{ opacity: 0, x: -10 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -10 }}
+                  transition={{ duration: 0.2 }}
+                  className="text-sm font-medium text-red-400 group-hover:text-red-300 transition-colors"
+                >
+                  تسجيل الخروج
+                </motion.span>
+              )}
+            </AnimatePresence>
+          </div>
+
+          {/* Tooltip for collapsed state */}
+          {isCollapsed && (
+            <div className="absolute left-full ml-4 px-3 py-2 bg-slate-800 text-white text-sm rounded-lg shadow-xl opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity duration-200 whitespace-nowrap z-50">
+              تسجيل الخروج
+            </div>
+          )}
+        </motion.button>
+
+        {/* Collapse Toggle */}
         <motion.button
           onClick={toggleCollapse}
           className={cn(
